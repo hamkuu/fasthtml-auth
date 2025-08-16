@@ -1,6 +1,14 @@
-def main():
-    print("Hello from fasthtml-auth!")
+from fasthtml import common as fh
+
+app, rt = fh.fast_app()
 
 
-if __name__ == "__main__":
-    main()
+@rt
+def index():
+    return fh.Div(
+        fh.H1("Welcome to FastHTML"),
+        fh.P("Hello, FastHTML!")
+    )
+
+
+fh.serve()
