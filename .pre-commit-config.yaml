@@ -12,3 +12,9 @@ repos:
       - id: check-json
       - id: check-yaml
       - id: check-xml
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.12.9
+    hooks:
+      - id: ruff-check
+      - id: ruff-format
