@@ -1,2 +1,0 @@
-monsterui>=1.0.25
-python-fasthtml>=0.12.24

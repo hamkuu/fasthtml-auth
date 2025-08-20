@@ -20,8 +20,17 @@ class User:
     oauth_id: str = ""
 
 
+@dataclass
+class Car:
+    uid: int
+    id: Optional[int] = None
+    model: str = ""
+    price: float = 0.0
+
+
 db = database("database/fast_app.db")
 db.users = db.create(User, transform=True)
+db.cars = db.create(Car, transform=True, foreign_keys=[('uid', 'user')])
 
 
 class Auth(OAuth):
