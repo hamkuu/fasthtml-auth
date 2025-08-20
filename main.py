@@ -1,20 +1,23 @@
 from fasthtml.common import *
-from monsterui.all import *
 from fasthtml.oauth import GoogleAppClient, OAuth
 from fastlite import database
+
+from dataclasses import dataclass
 from starlette.responses import RedirectResponse
+from monsterui.all import *
 
 import os
 
 app, rt = fast_app(hdrs=Theme.blue.headers(), live=True)
 
 
+@dataclass
 class User:
-    id: int
-    email: str
-    name: str
-    picture: str
-    oauth_id: str
+    id: Optional[int] = None
+    email: str = ""
+    name: str = ""
+    picture: str = ""
+    oauth_id: str = ""
 
 
 db = database("database/fast_app.db")
