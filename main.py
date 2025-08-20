@@ -1,11 +1,11 @@
-import os
-
-from fasthtml import common as fh
-from fasthtml.oauth import OAuth, GoogleAppClient
+from fasthtml.common import *
+from fasthtml.oauth import GoogleAppClient, OAuth
 from fastlite import database
 from starlette.responses import RedirectResponse
 
-app, rt = fh.fast_app()
+import os
+
+app, rt = fast_app()
 
 
 class User:
@@ -27,24 +27,19 @@ class Auth(OAuth):
         return RedirectResponse("/dashboard", status_code=303)
 
 
-client = GoogleAppClient(
-    os.getenv("GOOGLE_CLIENT_ID"), os.getenv("GOOGLE_CLIENT_SECRET")
-)
+client = GoogleAppClient(os.getenv("GOOGLE_CLIENT_ID"), os.getenv("GOOGLE_CLIENT_SECRET"))
 oauth = Auth(app, client, skip=("/", "/logout", "/redirect"), login_path="/")
 
 
 @rt
 def index(req):
-    return fh.Titled("FastHTML App", fh.A("Login", href=oauth.login_link(req)))
+    return Titled("FastHTML App", A("Login", href=oauth.login_link(req)))
 
 
 @rt
 def dashboard(sess):
     user = db.users("oauth_id=?", (sess["auth"],))[0]
-
-    return fh.Titled(
-        "Dashboard", fh.P(f"Welcome back {user.email}"), fh.A("Logout", href="/logout")
-    )
+    return Titled("Dashboard", P(f"Welcome back {user.email}"), A("Logout", href="/logout"))
 
 
-fh.serve()
+serve()
